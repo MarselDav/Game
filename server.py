@@ -26,5 +26,22 @@ while True:
     except BlockingIOError:
         print("Нет желающих войти в игру")
 
-    time.sleep(1)
+    # считываем все команды игроков
+    for sock in players_sockets:
+        try:
+            data = sock.recv(1024)  # взять инфу из сокета
+            data = data.decode()  # декодировать инфу в строку
+            print("Получил", data)
+        except:
+            pass
 
+    # отправляем новое состояние игровой карты
+    for sock in players_sockets:
+        try:
+            sock.send("Новое состояние игры".encode())
+        except:
+            players_sockets.remove(sock)
+            sock.close()
+            print("Игрок вышел")
+
+    time.sleep(1)
