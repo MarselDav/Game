@@ -16,7 +16,7 @@ print("Сокет создался")
 
 players_sockets = []
 while True:
-    # проверка, ессть ли желающие войти в игру
+    # проверка, есть ли желающие войти в игру
     # принять новое подключение, возвращает новый сокет и адресс подключившегося игрока
     try:
         new_socket, address = main_socket.accept()
@@ -25,6 +25,7 @@ while True:
         players_sockets.append(new_socket)
     except BlockingIOError:
         print("Нет желающих войти в игру")
+        pass
 
     # считываем все команды игроков
     for sock in players_sockets:
